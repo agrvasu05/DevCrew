@@ -1,0 +1,31 @@
+{
+  "project_name": "CLI Expense Tracker",
+  "summary": "A command-line interface (CLI) application that allows users to track their expenses by categories and calculate monthly totals, all implemented in a single Python file using only the standard library.",
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Define Expense Data Structure",
+      "description": "Create a data structure to hold expense entries, including fields for amount, category, and date."
+    },
+    {
+      "id": 2,
+      "title": "Implement Expense Entry Functionality",
+      "description": "Write a function to allow users to input new expenses, specifying the amount, category, and date, and store these in the defined data structure."
+    },
+    {
+      "id": 3,
+      "title": "Create Category Management",
+      "description": "Implement functionality to define and manage expense categories, allowing users to view and add categories."
+    },
+    {
+      "id": 4,
+      "title": "Calculate Monthly Totals",
+      "description": "Develop a function to calculate and display the total expenses for each category on a monthly basis."
+    },
+    {
+      "id": 5,
+      "title": "Build CLI Interface",
+      "description": "Create a command-line interface that allows users to interact with the expense tracker, including options to add expenses, view totals, and manage categories."
+    }
+  ]
+}

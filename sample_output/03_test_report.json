@@ -1,0 +1,54 @@
+{
+  "total_cases": 6,
+  "passed": 3,
+  "failed": 3,
+  "test_cases": [
+    {
+      "name": "Valid Expense Addition",
+      "scenario": "Adding an expense with a valid category and date.",
+      "expected": "Expense is added successfully.",
+      "verdict": "pass",
+      "notes": "The expense is added correctly when the category exists."
+    },
+    {
+      "name": "Invalid Category Expense Addition",
+      "scenario": "Adding an expense with a non-existent category.",
+      "expected": "Error message is printed, and expense is not added.",
+      "verdict": "fail",
+      "notes": "The code prints an error but does not prevent adding the expense if the category is invalid."
+    },
+    {
+      "name": "Empty Category Addition",
+      "scenario": "Adding an empty category.",
+      "expected": "Category is added as an empty string.",
+      "verdict": "pass",
+      "notes": "The code allows adding an empty string as a category."
+    },
+    {
+      "name": "Duplicate Category Addition",
+      "scenario": "Adding a category that already exists.",
+      "expected": "Category remains unchanged, no error.",
+      "verdict": "pass",
+      "notes": "The set data structure prevents duplicates, which is expected behavior."
+    },
+    {
+      "name": "Calculate Monthly Totals with No Expenses",
+      "scenario": "Calculating totals for a month with no expenses.",
+      "expected": "Returns an empty dictionary.",
+      "verdict": "pass",
+      "notes": "The method correctly returns an empty dictionary when there are no expenses."
+    },
+    {
+      "name": "Invalid Date Format",
+      "scenario": "Adding an expense with an invalid date format.",
+      "expected": "Error raised due to invalid date format.",
+      "verdict": "fail",
+      "notes": "The code does not handle invalid date formats and will raise a ValueError."
+    }
+  ],
+  "bugs_found": [
+    "The add_expense method does not prevent adding an expense if the category is invalid.",
+    "The code does not handle invalid date formats, which can cause runtime errors.",
+    "Adding an empty string as a category is allowed, which may not be intended."
+  ]
+}
