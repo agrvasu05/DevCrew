@@ -6,6 +6,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Fixed
+- Reject empty or whitespace-only CLI ideas before starting the pipeline.
+
 ## [0.1.0] - 2026-10-21
 
 ### Added

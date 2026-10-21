@@ -16,6 +16,29 @@ def test_idea_is_required():
     assert exc.value.code == 2
 
 
+@pytest.mark.parametrize("idea", ["", "   ", "\t \r\n", "\u00a0\u2003"])
+@pytest.mark.parametrize("has_api_key", [True, False])
+def test_blank_idea_is_rejected_before_running(idea, has_api_key, monkeypatch, tmp_path, capsys):
+    calls = []
+
+    def fake_run(*args, **kwargs):
+        calls.append((args, kwargs))
+
+    monkeypatch.setattr("devcrew.crew.run", fake_run)
+    monkeypatch.setattr(cli, "load_dotenv", lambda: None)
+    monkeypatch.chdir(tmp_path)
+    if not has_api_key:
+        monkeypatch.delenv("OPENAI_API_KEY")
+
+    with pytest.raises(SystemExit) as exc:
+        cli.main([idea])
+
+    assert exc.value.code == 2
+    assert "idea must not be empty or whitespace-only" in capsys.readouterr().err
+    assert calls == []
+    assert not (tmp_path / "output").exists()
+
+
 def test_missing_api_key_exits_with_hint(monkeypatch):
     monkeypatch.delenv("OPENAI_API_KEY")
     monkeypatch.setattr(cli, "load_dotenv", lambda: None)
@@ -31,7 +54,8 @@ def test_output_dir_must_be_relative(bad):
     assert exc.value.code == 2
 
 
-def test_runs_pipeline_with_options(monkeypatch, tmp_path):
+@pytest.mark.parametrize("idea", ["a todo app", "  a todo app  "])
+def test_runs_pipeline_with_options(idea, monkeypatch, tmp_path):
     calls = {}
 
     def fake_run(idea, output_dir, model):
@@ -40,6 +64,6 @@ def test_runs_pipeline_with_options(monkeypatch, tmp_path):
 
     monkeypatch.setattr("devcrew.crew.run", fake_run)
     monkeypatch.chdir(tmp_path)
-    assert cli.main(["a todo app", "-o", "runs/todo", "-m", "gpt-4o"]) == 0
-    assert calls == {"idea": "a todo app", "output_dir": "runs/todo", "model": "gpt-4o"}
+    assert cli.main([idea, "-o", "runs/todo", "-m", "gpt-4o"]) == 0
+    assert calls == {"idea": idea, "output_dir": "runs/todo", "model": "gpt-4o"}
     assert (tmp_path / "runs" / "todo").is_dir()
