@@ -40,6 +40,9 @@ def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
 
+    if not args.idea.strip():
+        parser.error("idea must not be empty or whitespace-only")
+
     # CrewAI only writes task output to relative paths: it rejects ".." and "~",
     # and silently drops the leading "/" of an absolute path.
     if (
